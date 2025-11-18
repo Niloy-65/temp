@@ -31,140 +31,115 @@
             color: #007bff; 
             font-weight: 700;
             margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            font-size: 1.8rem;
         }
 
-        /* Input Row Layout (Class, Name, ID in one line) */
+        /* Input Row Layout */
         .top-controls {
             display: flex;
             gap: 20px;
             margin-bottom: 20px;
-            align-items: flex-end; /* Aligns labels and inputs cleanly */
+            align-items: flex-end;
         }
-
-        .control-group {
-            flex: 1;
-        }
-
+        .control-group { flex: 1; }
         label { font-weight: 600; margin-bottom: 8px; display: block; color: #555; }
-        
         input[type="text"], select { 
-            width: 100%; 
-            padding: 12px; 
-            border: 1px solid #ccc; 
-            border-radius: 4px; 
-            box-sizing: border-box; 
-            font-size: 14px;
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px;
         }
 
         /* Buttons */
-        button { 
-            border: none; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            font-size: 16px; 
-            transition: background-color .3s; 
-            display: block;
-        }
-
-        .btn-green {
-            background-color: #28a745; 
-            color: white; 
-            padding: 15px 20px; 
-            width: 100%;
-            margin-top: 20px;
-            font-weight: bold;
-        }
+        button { border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background-color .3s; display: block; }
+        .btn-green { background-color: #28a745; color: white; padding: 15px 20px; width: 100%; margin-top: 20px; font-weight: bold; }
         .btn-green:hover { background-color: #218838; }
-
-        .btn-red {
-            background-color: #dc3545; 
-            color: white; 
-            padding: 10px 20px; 
-            margin-top: 15px;
-        }
+        .btn-red { background-color: #dc3545; color: white; padding: 10px 20px; margin-top: 15px; }
         .btn-red:hover { background-color: #c82333; }
 
-        /* Table Styles */
+        /* Web View Table Styles */
         #books-list { margin-top: 20px; min-height: 40px; }
-        
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 0; }
+        .data-table { width: 100%; border-collapse: collapse; }
         .data-table th, .data-table td { border: 1px solid #ddd; padding: 12px; text-align: left; font-size: 14px; vertical-align: middle; }
         .data-table th { background-color: #f8f9fa; color: #333; font-weight: bold; }
         .data-table tr:nth-child(even) { background-color: #f9f9f9; }
-        
         .data-table input[type="checkbox"] { transform: scale(1.2); cursor: pointer; margin-right: 10px; }
         .data-table input[type="number"] { width: 70px; padding: 6px; text-align: center; border: 1px solid #ccc; border-radius: 4px; }
-        
         .total-row { font-weight: bold; background-color: #fff3cd !important; color: #856404; }
-        
-        /* Loader */
+        #select-all-header { display: flex; align-items: center; cursor: pointer; }
         .loader { display: inline-block; padding: 4px 8px; background: #e9ecef; border-radius: 4px; font-size: .9em; margin-left: 8px; }
 
-        /* Select All Header */
-        #select-all-header { display: flex; align-items: center; cursor: pointer; }
-        
         /* ============================
-           PRINT / MEMO STYLES 
+           PRINT / MEMO STYLES (FIXED)
            ============================ */
-        .memo-container { display: none; } /* Hidden on screen */
+        .memo-container { display: none; }
 
         @media print {
-            body { background-color: white; margin: 0; }
-            
-            /* Hide everything except the memo container */
-            body > #app > *:not(.memo-container) { display: none !important; }
-            
-            /* Reset App container for print */
-            #app { 
-                box-shadow: none; 
-                border: none; 
-                padding: 0; 
-                margin: 0; 
-                max-width: 100%; 
-                width: 100%;
+            /* Force A4 with very small margins to fit content */
+            @page { 
+                size: A4; 
+                margin: 6mm; 
             }
+            
+            body { 
+                background-color: white; 
+                margin: 0; 
+                padding: 0; 
+                -webkit-print-color-adjust: exact; 
+            }
+            
+            /* Hide web interface */
+            body > #app > *:not(.memo-output) { display: none !important; }
+            
+            /* Reset App container */
+            #app { box-shadow: none; border: none; padding: 0; margin: 0; max-width: 100%; width: 100%; }
 
+            /* Memo Specifics */
             .memo-container { 
                 display: block !important; 
                 width: 100%;
             }
 
+            /* Smaller Header Image for Print to save vertical space */
             .memo-header-img {
                 width: 100%;
-                max-height: 150px; /* Adjust based on your image aspect ratio */
+                max-height: 100px; 
                 object-fit: contain;
                 display: block;
-                margin-bottom: 10px;
+                margin-bottom: 5px;
             }
 
             .memo-meta {
-                margin-bottom: 15px;
-                border-bottom: 2px solid #333;
-                padding-bottom: 10px;
+                margin-bottom: 5px;
+                border-bottom: 1px solid #000;
+                padding-bottom: 5px;
             }
-            .memo-meta h2 { margin: 5px 0; text-align: center; color: #000; }
-            .memo-meta p { margin: 2px 0; font-size: 14px; }
+            .memo-meta h2 { margin: 2px 0; text-align: center; color: #000; font-size: 16px; }
+            .memo-meta table td { padding: 2px; font-size: 12px; }
 
-            .memo-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-            .memo-table th, .memo-table td { border: 1px solid #000; padding: 5px; }
-            .memo-table th { background-color: #eee !important; -webkit-print-color-adjust: exact; }
-            
-            /* Column sizing for print */
-            .memo-table th:nth-child(1){ width: 5%; }
-            .memo-table th:nth-child(2){ width: 55%; }
-            .memo-table th:nth-child(3){ width: 15%; }
-            .memo-table th:nth-child(4){ width: 10%; }
-            .memo-table th:nth-child(5){ width: 15%; }
+            /* Compact Table for Print */
+            .memo-table { 
+                width: 100%; 
+                border-collapse: collapse; 
+                font-size: 11px; /* Smaller font to fit more rows */
+            }
+            .memo-table th, .memo-table td { 
+                border: 1px solid #000; 
+                padding: 3px 5px; /* Reduce padding to save height */
+                vertical-align: middle;
+            }
+            .memo-table th { background-color: #ddd !important; font-weight: bold; text-align: center; }
+
+            /* Fixed Column Widths to prevent overflow */
+            .col-sl { width: 5%; text-align: center; }
+            .col-item { width: 55%; }
+            .col-price { width: 13%; text-align: right; }
+            .col-qty { width: 7%; text-align: center; }
+            .col-total { width: 20%; text-align: right; }
 
             /* Footer credits */
-            @page { 
-                size: A4; 
-                margin: 10mm;
-                @bottom-left { content: "System Developed by NA Niloy"; font-size: 8pt; }
+            .footer-credit {
+                font-size: 8pt;
+                text-align: left;
+                margin-top: 5px;
+                color: #555;
             }
         }
     </style>
@@ -200,12 +175,12 @@
         <button onclick="generateMemo()" class="btn-green">Generate Bill, Save Data, and Print</button>
         <button onclick="resetForm()" class="btn-red">Create New Bill</button>
 
-        <div id="memo-output" class="memo-container"></div>
+        <div id="memo-output" class="memo-container memo-output"></div>
     </div>
 
 <script>
 /* =========================
-   Sheet settings (edit these)
+   Sheet settings
    ========================= */
 const SHEETS = [
   { name: "Nursery", gid: "489499898" },
@@ -225,7 +200,6 @@ const SHEETS = [
 const BASE = "https://docs.google.com/spreadsheets/d/1htWKKFov6IgbkJTqrhXl-EvvHzZlyWHOsNAQScfarw0/export?format=csv&gid=";
 
 /* ========= Utilities ========= */
-
 function csvToRows(str) {
   str = str.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
   const rows = [];
@@ -256,14 +230,12 @@ function parseCSVToObjects(csvText) {
   if (!rows || rows.length === 0) return [];
   const headerRow = rows[0].map(h => (h || '').toString().trim());
   const map = { Subject: -1, Books: -1, Price: -1 };
-  
   headerRow.forEach((h, idx) => {
     const key = (h || '').replace(/\s+/g, ' ').trim().toLowerCase();
     if (/^subject\b/i.test(h) || key.includes('subject')) map.Subject = idx;
     else if (/^books?\b/i.test(h) || key.includes('book')) map.Books = idx;
     else if (/^price\b/i.test(h) || key.includes('price') || key.includes('rate')) map.Price = idx;
   });
-
   if (map.Subject === -1 && headerRow.length >= 2) map.Subject = 1;
   if (map.Books === -1 && headerRow.length >= 3) map.Books = 2;
   if (map.Price === -1) map.Price = headerRow.length - 1;
@@ -308,7 +280,7 @@ async function loadBooksForClass(className) {
     return parseCSVToObjects(csv);
   } catch (err) {
     console.error(err);
-    booksListDiv.innerHTML = '<div style="color:#a00; padding:10px;">Error loading sheet. Check internet or sheet permissions.</div>';
+    booksListDiv.innerHTML = '<div style="color:#a00; padding:10px;">Error loading sheet.</div>';
     return [];
   }
 }
@@ -386,10 +358,10 @@ function escapeHtml(str) {
   return str.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-/* ========================= Select/Deselect all books ========================= */
+/* ========================= Logic ========================= */
 function toggleSelectAll() {
   const masterCheckbox = document.getElementById('select-all-books');
-  masterCheckbox.checked = !masterCheckbox.checked; // Toggle state manually since div was clicked
+  masterCheckbox.checked = !masterCheckbox.checked;
   selectAllBooks(masterCheckbox.checked);
 }
 
@@ -404,12 +376,10 @@ function selectAllBooks(checked) {
   calculateTotal();
 }
 
-/* ================================== Sync checkbox <-> quantity input ================================== */
 function updateQuantityAndCheckbox(element, type) {
   const index = element.getAttribute('data-index');
   const checkbox = document.getElementById(`check-book-${index}`);
   const qtyInput = document.getElementById(`qty-book-${index}`);
-  const selectAllCheckbox = document.getElementById('select-all-books');
 
   if (!checkbox || !qtyInput) return;
 
@@ -423,7 +393,6 @@ function updateQuantityAndCheckbox(element, type) {
   calculateTotal();
 }
 
-/* ======================= Calculate totals display ======================= */
 function calculateTotal() {
   const selectedClass = document.getElementById('class-select').value;
   if (!selectedClass) return;
@@ -476,13 +445,14 @@ function generateMemo() {
 
   if (salesItems.length === 0) { alert('Please select at least one book.'); return; }
 
-  // 3. GENERATE MEMO WITH IMAGE AT THE TOP
+  // GENERATE MEMO
+  // Note: Class names (col-sl, etc) are added for fixed widths in print view
   let memoHTML = `
     <img src="image.png" class="memo-header-img" alt="Header">
     
     <div class="memo-meta">
       <h2>Book Sales Memo</h2>
-      <table style="width:100%; margin-top:10px; border:none;">
+      <table style="width:100%; margin-top:5px; border:none;">
          <tr>
             <td style="border:none;">Student Name: <strong>${studentName || 'N/A'}</strong></td>
             <td style="border:none; text-align:right;">Date: <strong>${new Date().toLocaleDateString('en-GB')}</strong></td>
@@ -497,11 +467,11 @@ function generateMemo() {
     <table class="memo-table">
       <thead>
         <tr>
-          <th>SL</th>
-          <th>Book Name & Subject</th>
-          <th style="text-align:right;">Unit Price</th>
-          <th style="text-align:center;">Qty</th>
-          <th style="text-align:right;">Total (BDT)</th>
+          <th class="col-sl">SL</th>
+          <th class="col-item">Book Name & Subject</th>
+          <th class="col-price">Unit Price</th>
+          <th class="col-qty">Qty</th>
+          <th class="col-total">Total (BDT)</th>
         </tr>
       </thead>
       <tbody>
@@ -510,11 +480,11 @@ function generateMemo() {
   salesItems.forEach((item, i) => {
     memoHTML += `
       <tr>
-        <td>${i+1}</td>
-        <td>${escapeHtml(item.Book)} <br><small>(${escapeHtml(item.Subject)})</small></td>
-        <td style="text-align:right;">${item.Price.toLocaleString()}</td>
-        <td style="text-align:center;">${item.Qty}</td>
-        <td style="text-align:right;">${item.Total.toLocaleString()}</td>
+        <td class="col-sl" style="text-align:center;">${i+1}</td>
+        <td class="col-item">${escapeHtml(item.Book)} <br><span style="color:#555; font-size:0.9em;">(${escapeHtml(item.Subject)})</span></td>
+        <td class="col-price">${item.Price.toLocaleString()}</td>
+        <td class="col-qty">${item.Qty}</td>
+        <td class="col-total">${item.Total.toLocaleString()}</td>
       </tr>
     `;
   });
@@ -522,27 +492,23 @@ function generateMemo() {
   memoHTML += `
       <tr class="total-row">
         <td colspan="4" style="text-align:right;">Grand Total Payable:</td>
-        <td style="text-align:right;">${finalTotal.toLocaleString()} BDT</td>
+        <td class="col-total">${finalTotal.toLocaleString()} BDT</td>
       </tr>
     </tbody></table>
-    <br>
-    <div style="display:flex; justify-content:space-between; margin-top:40px;">
-        <div style="border-top:1px dashed #000; padding-top:5px;">Receiver Signature</div>
-        <div style="border-top:1px dashed #000; padding-top:5px;">Authority Signature</div>
-    </div>
+    
+    <div class="footer-credit">System Developed by NA Niloy</div>
   `;
+
+  // REMOVED: Receiver Signature and Authority Signature section
 
   memoOutput.innerHTML = memoHTML;
   
-  // Log data (Optional)
   const logData = { class: selectedClass, studentName: studentName, studentId: studentId, total: finalTotal, items: salesItems };
   logSaleToGoogleSheet(logData);
 
-  // Print
   window.print();
 }
 
-/* ================================================= Send sale data ================================================= */
 function logSaleToGoogleSheet(data) {
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwBxbzsIcvRK_RDjn4VPiet2dWEaHb1vuLxY6Gtjt09rtd5YkwJXGbIFawdlBIVzcnm/exec';
   if (!SCRIPT_URL.includes('/s/')) return;
